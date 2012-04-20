@@ -5,16 +5,28 @@
 " 作業内容を記憶しておくコマンド
 
 
+:let g:vim_diary_debug = 1
+:let g:vim_diary_basedir = "~/Dropbox/diary"
 
+command! Test :call TestFunc()
 
-" デバッグ用
-" 実際はテンプレートは前の日の日記にしたい
+function! TestFunc()
+  :let dir = expand(g:vim_diary_basedir)
+  :echo system("ls")
+endfunction
+
+" TODO 実際はテンプレートは前の日の日記にしたい
 if !exists('g:vim_diary_template_file')
   :let g:vim_diary_template_file = "./00.txt"
 endif
 
 " これ絶対他に方法あるはず
 function! PrintLn(line)
+  if g:vim_diary_debug
+    :echo a:line
+    return
+  endif
+
   execute "normal i" . a:line
   execute "normal o"
 endfunction
