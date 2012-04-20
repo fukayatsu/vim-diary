@@ -10,7 +10,7 @@
 " デバッグ用
 " 実際はテンプレートは前の日の日記にしたい
 if !exists('g:vim_diary_template_file')
-  :let g:vim_diary_template_file = "00.txt"
+  :let g:vim_diary_template_file = "./00.txt"
 endif
 
 " これ絶対他に方法あるはず
