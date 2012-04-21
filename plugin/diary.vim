@@ -54,17 +54,13 @@ function! ReadTemplate(file)
   for line in readfile(a:file)
     if line =~ "^##"
       let state = 2
-      "call PrintLn("")
-      "call PrintLn(line)
-      call add(array, line)
       call add(array, "")
+      call add(array, line)
 
     elseif line =~ "^#"
       let state = 1
-      "call PrintLn("")
-      "call PrintLn(line)
-      call add(array, line)
       call add(array, "")
+      call add(array, line)
 
     elseif state != 1
       "call PrintLn(line)
