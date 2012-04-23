@@ -5,7 +5,6 @@
 " 作業内容を記憶しておくコマンド
 
 " 設定
-:let g:vim_diary_debug = 0
 :let g:vim_diary_basedir = expand("~/Dropbox/diary/")
 :let g:vim_diary_pattern = "**/*.txt"
 :let g:vim_diary_time_delay_hour = 6
@@ -19,7 +18,7 @@ command! Diary :call  Diary()
 
 function! Diary()
   let today = GetTodayDiary()
-  let last = GetLastDiary()
+  let last = GetLastDiary(0)
   execute (":vnew ".today)
   if(last != today)
     call ReadTemplate(last)
@@ -32,7 +31,7 @@ function! GetTodayDiary()
   return (g:vim_diary_basedir . strftime("%Y/%m/%Y-%m-%d.txt", time))
 endfunction
 
-function! GetLastDiary()
+function! GetLastDiary(nday)
   let query = g:vim_diary_basedir . g:vim_diary_pattern
   let filelist = expand(query)
   let files = split(filelist, "\n")
@@ -41,7 +40,7 @@ function! GetLastDiary()
     return default_template_file
   endif
 
-  return files[len(files)-1]
+  return files[len(files) -1 -a:nday]
 endfunction
 
 " テンプレート読み込み
@@ -68,8 +67,12 @@ function! ReadTemplate(file)
     endif
   endfor
 
+  set noautoindent
+  set nosmartindent
   let text =  join(array, "\n")
   execute "normal i".text
+  set autoindent
+  set smartindent
 
   " カーソル位置復元
   call setpos(".",pos)
