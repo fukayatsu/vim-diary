@@ -53,7 +53,6 @@ function! ReadTemplate(file)
   for line in readfile(a:file)
     if line =~ "^##"
       let state = 2
-      call add(array, "")
       call add(array, line)
 
     elseif line =~ "^#"
@@ -62,7 +61,6 @@ function! ReadTemplate(file)
       call add(array, line)
 
     elseif state != 1
-      "call PrintLn(line)
       call add(array, line)
     endif
   endfor
