@@ -51,13 +51,18 @@ function! ReadTemplate(file)
 
   let array = []
   for line in readfile(a:file)
+    if line =~ "^#"
+      if state == 1
+        call add(array, "")
+      endif
+    endif
+
     if line =~ "^##"
       let state = 2
       call add(array, line)
 
     elseif line =~ "^#"
       let state = 1
-      call add(array, "")
       call add(array, line)
 
     elseif state != 1
